@@ -1,10 +1,19 @@
 const express = require('express');
 const mongoose = require('mongoose');
+var fs = require('fs');
+var https = require('https');
+var privateKey  = fs.readFileSync('sslcert/key.pem', 'utf8');
+var certificate = fs.readFileSync('sslcert/cert.pem', 'utf8');
+
+var credentials = {key: privateKey, cert: certificate};
+
 const authRoutes = require('./routes/authRoutes');
 const cookieParser = require('cookie-parser');
 const { requireAuth, checkUser, checkadmin, checkSuperadmin, verifiedAccount } = require('./middleware/authMiddleware');
 
 const app = express();
+var httpsServer = https.createServer(credentials, app);
+
 const xXssProtection = require("x-xss-protection");
 
 var helmet = require('helmet');
@@ -31,7 +40,7 @@ PORT = 3000;
 // database connection
 const dbURI = 'mongodb+srv://thushara:e16388com@cluster0.whce1.mongodb.net/project';
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true })
-  .then((result) => app.listen(PORT))
+  .then((result) => httpsServer.listen(3000))
   .catch((err) => console.log(err));
 
 console.log("App listens in port "+ PORT);
