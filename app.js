@@ -4,7 +4,10 @@ var fs = require('fs');
 var https = require('https');
 var privateKey  = fs.readFileSync('sslcert/key.pem', 'utf8');
 var certificate = fs.readFileSync('sslcert/cert.pem', 'utf8');
-
+var Ddos = require('ddos')
+var ddos = new Ddos({burst:3, limit:6})
+    
+    
 var credentials = {key: privateKey, cert: certificate};
 
 const authRoutes = require('./routes/authRoutes');
@@ -12,6 +15,7 @@ const cookieParser = require('cookie-parser');
 const { requireAuth, checkUser, checkadmin, checkSuperadmin, verifiedAccount } = require('./middleware/authMiddleware');
 
 const app = express();
+app.use(ddos.express);
 var httpsServer = https.createServer(credentials, app);
 
 const xXssProtection = require("x-xss-protection");
@@ -19,12 +23,12 @@ const xXssProtection = require("x-xss-protection");
 var helmet = require('helmet');
 
 app.use(helmet({
-  contentSecurityPolicy: false,
+  contentSecurityPolicy: false
 }))
 
 
 
-// Set "X-XSS-Protection: 0"
+// Set "X-XSS-Protection
 app.use(xXssProtection());
 
 // middleware
@@ -40,7 +44,7 @@ PORT = 3000;
 // database connection
 const dbURI = 'mongodb+srv://thushara:e16388com@cluster0.whce1.mongodb.net/project';
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true })
-  .then((result) => httpsServer.listen(3000))
+  .then((result) => httpsServer.listen(PORT))
   .catch((err) => console.log(err));
 
 console.log("App listens in port "+ PORT);

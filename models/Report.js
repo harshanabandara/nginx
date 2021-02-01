@@ -12,9 +12,9 @@ const reportSchema = new mongoose.Schema({
       no: { type: String,
         validate: [isInt , 'Please enter a valid value']},
 
-    monthlyUsage: [Number]
+    monthlyUsage: [String]
   });
-
+  
 
 const Report = mongoose.model('report', reportSchema);
 

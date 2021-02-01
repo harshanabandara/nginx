@@ -22,14 +22,14 @@ const createAdminAccountLimiter = rateLimit({
 
 const createDataLimiter = rateLimit({
     windowMs: 60 * 60 * 1000, // 1 hour window
-    max: 10, // start blocking after 5 requests
+    max: 20, // start blocking after 5 requests
     message:
       "Too many requests from this IP, please try again after an hour"
   });
 
 const createLoginLimiter = rateLimit({
     windowMs: 60 * 60 * 1000, // 1 hour window
-    max: 5, // start blocking after 5 requests
+    max: 20, // start blocking after 5 requests
     message:
       "Too many requests from this IP, please try again after an hour"
   });
@@ -60,7 +60,8 @@ router.get('/report',createDataLimiter, requireAuth, verifiedAccount,checkadmin,
 router.get('/statistics',createDataLimiter, requireAuth, verifiedAccount, authController.userStatistics_get);
 
 router.delete('/remove/:id',createDataLimiter, requireAuth, verifiedAccount, checkadmin, authController.remove_delete);
+router.delete('/removeAdmin/:id',createDataLimiter, requireAuth, verifiedAccount, checkSuperadmin, authController.removeAdmin_delete);
 
 router.put('/update',createDataLimiter, requireAuth, verifiedAccount, checkadmin, authController.user_put);
-
+router.put('/readings/:id',authController.readings_put);
 module.exports = router;

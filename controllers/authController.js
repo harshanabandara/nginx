@@ -49,6 +49,68 @@ const createToken = (id) => {
   });
 };
 
+module.exports.removeAdmin_delete = (req, res)  => {
+  console.log("remove admin")
+  if(req.params.id)
+  {
+    User.deleteOne({email: req.params.id, role: 'admin' }, function (err, results) {
+      if (err) 
+      {
+        console.log(err);
+      }
+      if(results.deletedCount == 0)
+      {
+        res.status(404).json({'msg' : 'This User Does Not Exist!'});
+      }
+      else
+      {
+        Tank.deleteMany({email: req.params.id }, function (err, res) {
+          if (err) 
+          {
+            console.log(err);
+          }
+        });
+        customer.deleteOne({email: req.params.id }, function (err, res) {
+          if (err) 
+          {
+            console.log(err);
+          }
+        });
+        Report.deleteMany({email: req.params.id }, function (err, res) {
+          if (err) 
+          {
+            console.log(err);
+          }
+        });
+        res.status(200).json({'msg' : 'Admin was Removed From System!'});
+      }
+    });
+  }
+
+  else
+  {
+    res.status(401).json({'msg' : 'Please Enter a Valid Email!'});
+  }
+
+}
+
+module.exports.readings_put = (req, res) => {
+  const tank =  JSON.parse(req.params.id); 
+  const filter = {email: tank.email, no: tank.no};
+  Tank.updateOne(filter, req.body , { runValidators: true }, function(err,
+    result)
+    {
+      if (err) 
+        {
+          res.send({'response' : 400});
+        } 
+      else 
+        { 
+          res.send({'response' : 200});
+        }
+    });
+}
+
 module.exports.user_put = (req, res) => {
   
   const filter = { email : req.body.email};
@@ -362,7 +424,7 @@ module.exports.adminSignup_post = async (req, res) => {
 
       var mailOptions = { from: 'watermonitor13@gmail.com', 
       to: user.email, subject: 'Account Verification Token', 
-      text: 'Hello,\n\n' + 'Please verify your administrative account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + cnfrmToken.token + '.\n' };
+      text: 'Hello,\n\n' + 'Please verify your administrative account by clicking the link: \nhttps:\/\/' + req.headers.host + '\/confirmation\/' + cnfrmToken.token + '.\n' };
 
 transporter.sendMail(mailOptions, function(error, info)
     {
@@ -426,7 +488,7 @@ module.exports.signup_post = async (req, res) => {
 
       var mailOptions = { from: 'watermonitor13@gmail.com', 
       to: user.email, subject: 'Account Verification Token', 
-      text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + cnfrmToken.token + '.\n' };
+      text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttps:\/\/' + req.headers.host + '\/confirmation\/' + cnfrmToken.token + '.\n' };
 
 transporter.sendMail(mailOptions, function(error, info)
     {
