@@ -58,6 +58,13 @@ router.get('/confirmation/:id', requireAuth, authController.confirmation_Post);
 router.get('/tanks',createDataLimiter, requireAuth, verifiedAccount, authController.userData_get);
 router.get('/report',createDataLimiter, requireAuth, verifiedAccount,checkadmin, authController.report_get);
 router.get('/statistics',createDataLimiter, requireAuth, verifiedAccount, authController.userStatistics_get);
+router.get('/name/:id', requireAuth, verifiedAccount,checkadmin,  authController.name_get);
+router.get('/area/:id', requireAuth, verifiedAccount,checkadmin,  authController.area_get);
+
+
+router.post("/notice" , authController.notice_post);
+
+
 
 router.delete('/remove/:id',createDataLimiter, requireAuth, verifiedAccount, checkadmin, authController.remove_delete);
 router.delete('/removeAdmin/:id',createDataLimiter, requireAuth, verifiedAccount, checkSuperadmin, authController.removeAdmin_delete);

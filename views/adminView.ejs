@@ -1,21 +1,72 @@
 <%- include('partials/adminheader'); -%>
 
-
+<header2>
+<div class="image">
+    <img src="/tank.png" alt="">
+  </div>
   	<h1>System Details</h1>
-  	<br> <br>
-    <h2>Product By</h2>
-    <h1 id = "test">GROUP 13</h1>
-   
+  
+</header2>  
 
 <link href="https://unpkg.com/tabulator-tables@4.9.3/dist/css/tabulator.min.css" rel="stylesheet">
 <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.9.3/dist/js/tabulator.min.js"></script>
-
-     <button onclick="loadData()">System Report</button>
+	
+  	
+  	 <button onclick="loadData()">System Report</button>
      <br> <br>
      <div id="table"></div>
 
 
+	<br>
+    
+    <div class="row">
+      <div class="column">
+          	
 
+<button class="open-button" onclick="openUpdateForm()">Update a User</button>
+<br>
+
+<div class="form-popup" id="myUpdateForm" hidden>
+  <form>
+    
+
+    <label for="email"><b>Email of User</b></label>
+
+     <input type="text"  id="email" placeholder="Enter Email To Update" required="" />
+   	 <div class="email error" id = 'emailerror'></div>
+
+     <label for="firstname">First Name</label>
+	  <input type="text" id="firstname" placeholder="Enter First Name To Update" required maxlength="20" pattern="^[A-Z][a-z]*[a-z]$" />
+	  <div class="email error" id = 'firstnameerror'></div>
+
+
+	  <label for="lastname">Last Name</label>
+	  <input type="text" id="lastname" placeholder="Enter Last Name To Update" required maxlength="20" pattern="^[A-Z][a-z]*[a-z]$" />
+	  <div class="email error" id = 'lastnameerror'></div>
+
+
+	  <label for="contact">Contact NO</label>
+	  <input type="contact" id="contact" placeholder="Enter Contact No. To Update" required pattern="[0-9]{10}" />
+	  <div class="email error" id = 'contacterror'></div>
+
+	  <label for="address">Address</label>
+	  <input type="address" id="address" placeholder="Enter Address To Update" required minlength="1" maxlength="100"/>
+	  <div class="email error" id = 'addresserror'></div>
+
+
+    <button type="button" onclick="UpdateUser()">UPDATE</button>
+
+
+
+    <button type="button" class="btn cancel" onclick="closeUpdateForm()">Close</button>
+  </form>
+</div>
+
+<h3 id = "updateresults"></h3>
+      </div>      
+      <div class="column" >
+       
+        
 <button class="open-button" onclick="openDeleteForm()">Delete a User</button>
 <br>
 
@@ -34,51 +85,14 @@
 </div>
 <br>
 <h3 id = "results"></h3>
+      </div>
+    </div>
 
 
-
-<button class="open-button" onclick="openUpdateForm()">Update a User</button>
-<br>
-
-<div class="form-popup" id="myUpdateForm" hidden>
-  <form>
+  	
+  </div>
+</div> 
     
-
-    <label for="email"><b>Email of User</b></label>
-
-     <input type="text"  id="email" placeholder="Enter Email To Update" required="" />
-   	 <div class="email error" id = 'emailerror'></div>
-
-     <label for="firstname">First Name</label>
-	  <input type="text" id="firstname" required maxlength="20" pattern="^[A-Z][a-z]*[a-z]$" />
-	  <div class="email error" id = 'firstnameerror'></div>
-
-
-	  <label for="lastname">Last Name</label>
-	  <input type="text" id="lastname" required maxlength="20" pattern="^[A-Z][a-z]*[a-z]$" />
-	  <div class="email error" id = 'lastnameerror'></div>
-
-
-	  <label for="contact">Contact NO</label>
-	  <input type="contact" id="contact" required pattern="[0-9]{10}" />
-	  <div class="email error" id = 'contacterror'></div>
-
-	  <label for="address">Address</label>
-	  <input type="address" id="address" required minlength="1" maxlength="100"/>
-	  <div class="email error" id = 'addresserror'></div>
-
-
-    <button type="button" onclick="UpdateUser()">UPDATE</button>
-
-
-
-    <button type="button" class="btn cancel" onclick="closeUpdateForm()">Close</button>
-  </form>
-</div>
-
-<h3 id = "updateresults"></h3>
-
-
 
 <%- include('partials/footer'); -%>
 

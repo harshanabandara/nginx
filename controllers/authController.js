@@ -49,6 +49,135 @@ const createToken = (id) => {
   });
 };
 
+module.exports.notice_post = async (req, res) => {
+  const { email, topic, message } = req.body;
+
+  if(!message)
+  {
+    res.status(400).json({"results": "message not found"});
+  }
+  if(!topic)
+  {
+    res.status(401).json({"results": "topic not found"});
+  }
+
+
+  customer
+ .find({
+  email: email   // search query
+ },{ "_id":0, "__v": 0, "area": 0, "email": 0, "tanks": 0})
+ .then(results => {
+   if(results[0])
+   {
+    try
+    {
+      
+      
+      var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'watermonitor13@gmail.com',
+          pass: 'e16388com'
+        }
+      });
+  
+      var mailOptions = { from: 'watermonitor13@gmail.com', 
+      to: email, subject: topic, 
+      text: message };
+  
+  transporter.sendMail(mailOptions, function(error, info)
+    {
+    if (error) 
+      {
+        console.log(error);
+      } 
+    else 
+      {
+        console.log('Email sent: ' + info.response);
+      }
+    }); 
+  
+     
+      res.status(200).json({ message : "email sent" });
+    }
+    catch(err) 
+    { 
+      console.log(err);
+      res.status(400).json({ err });
+    } 
+   } 
+   else
+   {
+    res.status(404).json({"results": "not found"});
+   }
+ })
+ .catch(err => {
+   console.error(err)
+ })
+  
+  console.log(req.body)
+
+
+ 
+
+
+
+}
+
+
+
+module.exports.name_get = (req, res) => {
+  const email = req.params.id; 
+  customer
+ .find({
+  email: email   // search query
+ },{ "_id":0, "__v": 0, "area": 0, "email": 0, "tanks": 0})
+ .then(results => {
+   if(results[0])
+   {
+    console.log(results[0])
+    res.status(200).json({"results": results});
+   } 
+   else
+   {
+    res.status(404).json({"results": "not found"});
+   }
+ })
+ .catch(err => {
+   console.error(err)
+ })
+}
+
+
+module.exports.area_get = (req, res) => {
+  const area = req.params.id; 
+  customer
+ .find({
+  area: area   // search query
+ },{ "_id":0, "__v": 0, "area": 0, "email": 0, "tanks": 0})
+ .then(results => {
+   if(results[0])
+   {
+    console.log(results[0])
+    res.status(200).json({results: results});
+    //res.status(200).json({"results": "wok"});
+
+   } 
+   else
+   {
+    res.status(404).json({results: "not found"});
+   }
+ })
+ .catch(err => {
+   console.error(err)
+ })
+}
+
+
+
+
+
+
 module.exports.removeAdmin_delete = (req, res)  => {
   console.log("remove admin")
   if(req.params.id)

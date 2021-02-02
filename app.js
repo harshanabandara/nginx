@@ -57,6 +57,9 @@ app.get('/sadmin',verifiedAccount, checkadmin, (req, res) => res.render('sadmin'
 
 app.get('/superView',verifiedAccount, checkSuperadmin, (req, res) => res.render('superView'));
 app.get('/tooManyRequests', (req, res) => res.render('tooManyRequests'));
+app.get('/test', (req, res) => res.render('test'));
+app.get('/announce', (req, res) => res.render('announce'));
+app.get('/customers', (req, res) => res.render('customers'));
 
 
 

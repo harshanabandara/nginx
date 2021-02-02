@@ -12,6 +12,24 @@ body{
 
 }
 
+
+
+.column {
+	box-sizing: border-box;
+  float: left;
+  width: 50%;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.row:after {
+	box-sizing: border-box;
+  content: "";
+  display: table;
+  clear: both;
+}
+
 h1, h2, h3, h4, ul, li, a, p, input, label, button, div, footer, select, option{
   margin: 0;
   padding: 0;
@@ -148,7 +166,7 @@ header .btn{
   margin: 80PX AUTO;
   max-width: 1200px;
 }
-.{
+.recipe{
   display: inline-block;
   border-radius: 20px;
   background: white;
@@ -156,7 +174,7 @@ header .btn{
   text-align: center;
   padding: 0 20px 30px 20px
 }
-. img{
+.recipe img{
   width: 100px;
   margin: -30px auto 20px;
 }
