@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const authController = require('../controllers/authController');
-const { requireAuth, checkadmin, checkSuperadmin, verifiedAccount } = require('../middleware/authMiddleware');
+const { requireAuth, checkadmin, checkSuperadmin, verifiedAccount, checkcust } = require('../middleware/authMiddleware');
 const rateLimit = require("express-rate-limit");
 
 
@@ -49,15 +49,15 @@ router.post('/login', createLoginLimiter, authController.login_post);
 router.get('/logout', authController.logout_get);
 router.get('/restricted', authController.restricted_get);
 
-router.get('/userReg', requireAuth, verifiedAccount, authController.userReg_get);
-router.post('/userReg', requireAuth, verifiedAccount, authController.userReg_post);
+router.get('/userReg', requireAuth, verifiedAccount, checkcust, authController.userReg_get);
+router.post('/userReg', requireAuth, verifiedAccount, checkcust, authController.userReg_post);
 
 router.get('/confirmation/:id', requireAuth, authController.confirmation_Post);
 //router.post('/resend', authController.resendToken_Post);
 
-router.get('/tanks',createDataLimiter, requireAuth, verifiedAccount, authController.userData_get);
+router.get('/tanks',createDataLimiter, requireAuth, verifiedAccount, checkcust, authController.userData_get);
 router.get('/report',createDataLimiter, requireAuth, verifiedAccount,checkadmin, authController.report_get);
-router.get('/statistics',createDataLimiter, requireAuth, verifiedAccount, authController.userStatistics_get);
+router.get('/statistics',createDataLimiter, requireAuth, verifiedAccount, checkcust, authController.userStatistics_get);
 router.get('/name/:id', requireAuth, verifiedAccount,checkadmin,  authController.name_get);
 router.get('/area/:id', requireAuth, verifiedAccount,checkadmin,  authController.area_get);
 

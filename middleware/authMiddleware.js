@@ -125,6 +125,42 @@ const checkSuperadmin = (req, res, next) => {
 
 
 
+// check current user role
+const checkcust = (req, res, next) => {
+  const token = req.cookies.jwt;
+  if (token) 
+  {
+    jwt.verify(token, 'secret', async (err, decodedToken) => {
+      if (err) 
+      {
+        console.log(err.message);
+        res.redirect('/login');
+      } 
+      else 
+      {
+        let user = await User.findById(decodedToken.id);
+        console.log(user.role);
+
+        if (user.role.toString() == "user" && user.isVerified) 
+        {
+          next();
+        }
+        else
+        {
+          res.redirect('/restricted');
+        }
+      }
+    });
+  } 
+  else 
+  {
+    res.redirect('/login');
+  }
+};
+
+
+
+
 
 // check current user role
 const verifiedAccount = (req, res, next) => {
@@ -158,4 +194,4 @@ const verifiedAccount = (req, res, next) => {
     res.redirect('/login');
   }
 };
-module.exports = { requireAuth, checkUser, checkadmin, checkSuperadmin, verifiedAccount};
+module.exports = { requireAuth, checkUser, checkcust, checkadmin, checkSuperadmin, verifiedAccount};

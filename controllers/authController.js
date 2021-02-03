@@ -740,9 +740,17 @@ if(req.params.id)
                     {
                       res.redirect('/userReg');
                     }
+                   else if(user.role.toString() == "admin") 
+                    {
+                      res.redirect('/adminView');
+                    }
+                   else if(user.role.toString() == "super") 
+                    {
+                      res.redirect('/superView');
+                    } 
                     else
                     {
-                      res.redirect('/');
+                      res.redirect('/restricted');
                     }
                   
                 }
