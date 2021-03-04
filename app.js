@@ -15,18 +15,19 @@ const cookieParser = require('cookie-parser');
 const { requireAuth, checkUser, checkadmin, checkSuperadmin, verifiedAccount } = require('./middleware/authMiddleware');
 
 const app = express();
-app.use(ddos.express);
-var httpsServer = https.createServer(credentials, app);
+//app.use(ddos.express);
+//var httpsServer = https.createServer(credentials, app);
 
 const xXssProtection = require("x-xss-protection");
 
 var helmet = require('helmet');
 
+/*
 app.use(helmet({
   contentSecurityPolicy: false
 }))
 
-
+*/
 
 // Set "X-XSS-Protection
 app.use(xXssProtection());
@@ -44,7 +45,7 @@ PORT = 3000;
 // database connection
 const dbURI = 'mongodb+srv://thushara:e16388com@cluster0.whce1.mongodb.net/project';
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true })
-  .then((result) => httpsServer.listen(PORT))
+  .then((result) => app.listen(PORT))
   .catch((err) => console.log(err));
 
 console.log("App listens in port "+ PORT);

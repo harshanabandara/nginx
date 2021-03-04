@@ -225,7 +225,9 @@ module.exports.removeAdmin_delete = (req, res)  => {
 
 module.exports.readings_put = (req, res) => {
   const tank =  JSON.parse(req.params.id); 
+  console.log(tank);
   const filter = {email: tank.email, no: tank.no};
+  console.log(req.body );
   Tank.updateOne(filter, req.body , { runValidators: true }, function(err,
     result)
     {
@@ -631,7 +633,7 @@ transporter.sendMail(mailOptions, function(error, info)
       }
     }); 
 
-      res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000, secure: true });
+      res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000});
       res.status(201).json({ user: user });
     }
     catch(err) 
@@ -665,7 +667,7 @@ module.exports.login_post = async (req, res) => {
     const user = await User.login(email, password);
     console.log(user);
     const token = createToken(user._id);
-    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000, secure: true });
+    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000});
     res.status(200).json({ user: user });
    } 
   catch (err) 
