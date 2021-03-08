@@ -274,6 +274,7 @@ function loadData()
   
    var xhr = new XMLHttpRequest();
    
+   setInterval(function() {
 
    xhr.open('GET', '/report', true);
 
@@ -353,7 +354,7 @@ function loadData()
       }
 
       xhr.send();
-
+}, 5000);
 }
 
 

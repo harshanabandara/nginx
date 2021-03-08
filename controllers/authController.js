@@ -227,7 +227,7 @@ module.exports.readings_put = (req, res) => {
   const tank =  JSON.parse(req.params.id); 
   console.log(tank);
   const filter = {email: tank.email, no: tank.no};
-  console.log(req.body );
+  console.log((req.body) );
   Tank.updateOne(filter, req.body , { runValidators: true }, function(err,
     result)
     {
