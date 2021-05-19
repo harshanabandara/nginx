@@ -6,7 +6,7 @@ body{
   margin-left: 200px;
   font-size: 1.2rem;
   letter-spacing: 1px;
-  background:   skyblue;
+  background: linear-gradient(to right, #4776e6, #8e54e9);
 }
 
 .column {
@@ -117,7 +117,7 @@ form{
   padding: 30px;
   box-shadow: 1px 2px 3px rgba(0,0,0,0.1);
   border-radius: 10px;
-  background: lightblue;
+  background: linear-gradient(to right, #a8c0ff, #3f2b96);
 }
 
 form.Mail{
